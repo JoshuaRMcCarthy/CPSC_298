@@ -1,0 +1,31 @@
+import random
+
+# Possible characters for variables
+variables = ['x', 'y', 'z', 'w']
+
+def generate_lambda_expression(depth=0):
+    # Increase depth with each recursive call to avoid infinite recursion
+    depth += 1
+    # Base case: return a variable at a certain recursion depth to ensure termination
+    if depth > 5 or random.random() > 0.6:  # Adjust depth threshold and randomness as needed
+        return random.choice(variables)
+
+    # Randomly decide the type of lambda expression to generate next
+    expr_type = random.randint(1, 3)
+    if expr_type == 1:
+        # Variable
+        return random.choice(variables)
+    elif expr_type == 2:
+        # Abstraction
+        var = random.choice(variables)
+        expr = generate_lambda_expression(depth)
+        return f"(λ{var}.{expr})"
+    elif expr_type == 3:
+        # Application
+        expr1 = generate_lambda_expression(depth)
+        expr2 = generate_lambda_expression(depth)
+        return f"({expr1} {expr2})"
+
+# Generate a random lambda calculus expression
+random_lambda_expression = generate_lambda_expression()
+print("Random Lambda Expression:", random_lambda_expression)
